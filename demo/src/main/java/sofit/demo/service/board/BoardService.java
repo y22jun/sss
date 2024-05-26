@@ -34,6 +34,7 @@ public class BoardService {
 
         boardUpdateDto.title().ifPresent(board::updateTitle);
         boardUpdateDto.content().ifPresent(board::updateContent);
+        boardUpdateDto.hashtag().ifPresent(board::updateHashtag);
     }
 
     public void delete(Long id) {

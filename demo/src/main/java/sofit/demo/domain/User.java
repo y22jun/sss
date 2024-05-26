@@ -3,10 +3,8 @@ package sofit.demo.domain;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
 import jakarta.persistence.*;
+import java.util.*;
 
 @Getter
 @NoArgsConstructor
@@ -35,6 +33,14 @@ public class User extends BaseTimeEntity {
 
     private String refreshToken; // 리프레시 토큰
 
+    @Builder.Default
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<Board> boardList = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<Comment> commentList = new ArrayList<>();
+
     // 유저 권한 설정 메소드
     public void authorizeUser() {
         this.role = Role.USER;
@@ -56,6 +62,16 @@ public class User extends BaseTimeEntity {
 
     public void updateRefreshToken(String updateRefreshToken) {
         this.refreshToken = updateRefreshToken;
+    }
+
+    public void addBoard(Board board){
+        //post의 user 설정은 post에서 함
+        boardList.add(board);
+    }
+
+    public void addComment(Comment comment){
+        //comment의 writer 설정은 comment에서 함
+        commentList.add(comment);
     }
 }
 

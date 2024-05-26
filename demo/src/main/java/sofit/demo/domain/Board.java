@@ -7,10 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import java.util.*;
 
 @Table(name = "BOARD")
 @Getter
@@ -32,15 +34,26 @@ public class Board extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
+    private String hashtag;
+
     @Builder
-    public Board(String title, String content) {
+    public Board(String title, String content, String hashtag) {
         this.title = title;
         this.content = content;
+        this.hashtag = hashtag;
     }
+
+    @OneToMany(mappedBy = "board", orphanRemoval = true)
+    private List<Comment> commentList = new ArrayList<>();
 
     public void confirmWriter(User user) {
         this.user = user;
-        //user.addPost(this);
+        user.addBoard(this);
+    }
+
+    public void addComment(Comment comment){
+        //comment의 Post 설정은 comment에서 함
+        commentList.add(comment);
     }
 
     public void updateTitle(String title) {
@@ -49,5 +62,9 @@ public class Board extends BaseTimeEntity {
 
     public void updateContent(String content) {
         this.content = content;
+    }
+
+    public void updateHashtag(String hashtag) {
+        this.hashtag = hashtag;
     }
 }
