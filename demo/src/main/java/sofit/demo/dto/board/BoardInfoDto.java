@@ -12,12 +12,14 @@ public class BoardInfoDto {
     private Long boardId;
     private String title;
     private String content;
-    //private UserInfoDto userInfoDto;
+    private String hashtag;
+    private UserInfoDto userInfoDto;
     
     public BoardInfoDto(Board board) {
         this.boardId = board.getId();
         this.title = board.getTitle();
         this.content = board.getContent();
-        //this.userInfoDto = new UserInfoDto(board.getUser());
+        this.hashtag = board.getHashtag();
+        this.userInfoDto = new UserInfoDto(board.getUser());
     }
 }

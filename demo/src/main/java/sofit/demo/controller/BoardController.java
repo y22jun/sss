@@ -38,4 +38,9 @@ public class BoardController {
     public ResponseEntity getInfo(@PathVariable("boardId") Long boardId) {
         return ResponseEntity.ok(boardService.getBoardInfo(boardId));
     }
+
+    @GetMapping("/board/all")
+    public ResponseEntity getAllBoards() {
+        return ResponseEntity.ok(boardService.getAllBoards());
+    }
 }

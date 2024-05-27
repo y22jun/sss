@@ -1,5 +1,7 @@
 package sofit.demo.service.board;
 
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +13,7 @@ import sofit.demo.dto.board.BoardUpdateDto;
 import sofit.demo.global.util.SecurityUtil;
 import sofit.demo.repository.BoardRepository;
 import sofit.demo.repository.UserRepository;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +51,13 @@ public class BoardService {
 
     public BoardInfoDto getBoardInfo(Long id) {
         return new BoardInfoDto(boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다.")));
+    }
+
+    public List<BoardInfoDto> getAllBoards() {
+        
+        return boardRepository.findAll().stream()
+                              .map(board -> new BoardInfoDto(board))
+                              .collect(Collectors.toList());
     }
 
     public void checkAuthority(Board board) {

@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import sofit.demo.domain.Comment;
+import sofit.demo.dto.board.BoardInfoDto;
+import sofit.demo.dto.comment.CommentInfoDto;
 import sofit.demo.dto.comment.CommentSaveDto;
 import sofit.demo.dto.comment.CommentUpdateDto;
 import sofit.demo.global.util.SecurityUtil;
@@ -12,6 +14,7 @@ import sofit.demo.repository.BoardRepository;
 import sofit.demo.repository.CommentRepository;
 import sofit.demo.repository.UserRepository;
 import java.util.*;
+import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -69,4 +72,5 @@ public class CommentService {
         List<Comment> removableCommentList = comment.findRemovableList();
         commentRepository.deleteAll(removableCommentList);
     }
+
 }
